@@ -1,0 +1,69 @@
+@import '../../assets/scss/index';
+
+.btn {
+  border: 0;
+  cursor: pointer;
+  font-family: $raleway;
+  font-size: .75rem !important;
+  height: 35px;
+  letter-spacing: .1em;
+  outline: none;
+  text-align: center;
+  transition: .5s ease-in-out;
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.btn-black {
+  background: $primary-black;
+  color: $primary-white;
+}
+
+.btn-black:hover {
+  background: transparent;
+  border: 1px solid $primary-black;
+  color: $primary-black;
+}
+
+.btn-border-black {
+  background: transparent;
+  border: 2px solid $primary-black;
+  color: $primary-black;
+}
+
+.btn-border-black:hover {
+  background: $primary-black;
+  border: 2px solid $primary-black;
+  color: $primary-white;
+}
+
+.btn-link {
+  height: 35px;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: .5s ease-in-out;
+}
+
+.rounded-5 {
+  border-radius: 5px;
+}
+
+.w-40 {
+  width: 40%;
+}
+
+.w-45 {
+  width: 45%;
+}
+
+.w-50 {
+  width: 50%;
+}
+
+.w-60 {
+  width: 60%;
+}

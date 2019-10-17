@@ -1,0 +1,28 @@
+.container {
+  padding: 5%;
+
+  .card {
+    margin-bottom: 2%;
+  }
+
+  .starships-container {
+    display: flex;
+    flex-flow: wrap;
+    justify-content: space-between;
+  }
+}
+
+
+@media screen and (max-width: 740px) {
+  .container {
+
+    .card {
+      margin-bottom: 2%;
+    }
+
+    .starships-container {
+      justify-content: center;
+    }
+  }
+}
+
