@@ -19,6 +19,10 @@
     "*.json": [
       "prettier --write",
       "git add --force"
+    ],
+    "*.scss": [
+      "npm run sass-lint:fix",
+      "git add --force"
     ]
   },
   "scripts": {
@@ -27,7 +31,8 @@
     "pretest": "npm run prettier",
     "watch": "webpack-dev-server --mode development --open --hot",
     "prettier": "prettier --write '**/*.{js,jsx}'",
-    "lint": "node_modules/eslint/bin/eslint.js --fix"
+    "lint": "node_modules/eslint/bin/eslint.js --fix",
+    "sass-lint:fix": "sass-lint 'src/**/*.scss' -q -v && sass-lint-auto-fix"
   },
   "repository": {
     "type": "git",
@@ -49,6 +54,7 @@
     "bootstrap": "4.3.1",
     "express": "^4.17.1",
     "jquery": "3.4.1",
+    "jsonwebtoken": "8.5.1",
     "popper.js": "1.16.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

@@ -1,0 +1,37 @@
+@import '../../assets/scss/index';
+
+.auth-card {
+  margin-top: 1%;
+  width: 35%;
+
+  .form-check-label {
+    font-size: 12px;
+  }
+
+  .min-btn {
+    background-color: transparent;
+    color: $primary-blue;
+    font-family: $raleway;
+    height: 100%;
+    margin-left: 1%;
+    padding: 0;
+  }
+
+  .switch-state-div {
+    font-family: $raleway;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 740px) {
+
+  .auth-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .auth-card {
+    margin-top: 2%;
+    width: 95%;
+  }
+}

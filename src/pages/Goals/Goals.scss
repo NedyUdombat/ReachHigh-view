@@ -1,0 +1,40 @@
+@import '../../assets/scss/index';
+
+.goal-section {
+  .list-group {
+    width: 35%;
+
+    .list-group-item {
+      border: 2px solid $primary-black;
+      border-radius: 3px;
+      display: flex;
+      flex-direction: column;
+      height: 60px;
+      justify-content: center;
+      margin: 3% 0;
+      padding: 0 2%;
+
+      .custom-control-label,
+      input {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 740px) {
+
+  .goal-section {
+    .list-group {
+      width: 95%;
+    }
+
+    .btn-end {
+      height: 50px;
+      width: 100%;
+    }
+  }
+}
+
+
