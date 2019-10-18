@@ -8,6 +8,9 @@ import Layout from '../../wrappers/Layout/Index';
 import './index.scss';
 import '../../components/Button/Button.scss';
 
+// helpers
+import { getToken } from '../../api/helpers';
+
 const App = () => {
   return (
     <Layout>
@@ -21,13 +24,23 @@ const App = () => {
               short quiz below and get your personalized path today.
             </p>
             <div className="d-flex justify-content-center">
-              <Link
-                className="custom-btn-link btn-border-blue mt-0 mt-md-5 text-decoration-none btn-end"
-                to="/auth"
-              >
-                <i className="fas fa-download fa-lg mr-2 mr-md-3" />
-                <span className="font-weight-bold">Get Started</span>
-              </Link>
+              {getToken() ? (
+                <Link
+                  className="custom-btn-link btn-border-blue mt-0 mt-md-5 text-decoration-none btn-end"
+                  to="/goals"
+                >
+                  <span className="font-weight-bold">Continue</span>
+                  <i className="fas fa-arrow-right fa-lg ml-2 mr-md-3" />
+                </Link>
+              ) : (
+                <Link
+                  className="custom-btn-link btn-border-blue mt-0 mt-md-5 text-decoration-none btn-end"
+                  to="/auth"
+                >
+                  <i className="fas fa-download fa-lg mr-2 mr-md-3" />
+                  <span className="font-weight-bold">Get Started</span>
+                </Link>
+              )}
             </div>
           </div>
         </div>

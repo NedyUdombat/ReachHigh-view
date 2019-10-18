@@ -23,6 +23,15 @@
   }
 }
 
+.loader {
+  background: rgba(0, 0, 0, .5);
+  height: 100%;
+  position: absolute;
+  top: 0;
+  width: 91.7%;
+  z-index: 9999;
+}
+
 @media screen and (max-width: 740px) {
 
   .auth-title {

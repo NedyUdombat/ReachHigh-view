@@ -2,15 +2,14 @@ import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import { getEncodedUser } from '../../api/helpers';
+import { getToken } from '../../api/helpers';
 
 const GuestWrapper = ({ component: Component, ...rest }) => {
-  const userObject = getEncodedUser();
   return (
     <Route
       {...rest}
       render={props =>
-        userObject == null ? (
+        !getToken() ? (
           <Component {...props} />
         ) : (
           <Redirect to={{ pathname: `/` }} />

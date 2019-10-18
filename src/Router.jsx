@@ -17,10 +17,10 @@ const Router = () => {
   return (
     <Switch>
       <Route path="/" exact component={App} />
-      <Route path="/auth" exact component={Authentication} />
-      <Route path="/goals" exact component={Goals} />
-      <Route path="/tasks" exact component={Tasks} />
-      <Route path="/tasks/:id" component={SingleTask} />
+      <GuestWrapper path="/auth" exact component={Authentication} />
+      <ProtectedRoute path="/goals" exact component={Goals} />
+      <ProtectedRoute path="/tasks" exact component={Tasks} />
+      <ProtectedRoute path="/tasks/:id" component={SingleTask} />
       <Route component={NotFound} />
     </Switch>
   );
