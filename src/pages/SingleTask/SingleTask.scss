@@ -1,0 +1,33 @@
+@import '../../assets/scss/index';
+
+.single-task-container {
+  padding: .4rem 10%;
+
+  .mark-btn {
+    width: max-content;
+  }
+}
+
+
+@media screen and (max-width: 740px) {
+  .single-task-container {
+    padding: .4rem 3%;
+
+    .title {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .floating-btn {
+      width: 50px;
+      height: 50px;
+      border-radius: 100%;
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      z-index: 999999;
+    }
+  }
+}
+
+

@@ -1,0 +1,24 @@
+@import '../../assets/scss/index';
+
+.navbar {
+  background-color: $primary-blue;
+  padding: .5rem 10% !important;
+
+  .navbar-brand {
+    color: $primary-white !important;
+    font-family: $sacramento;
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .navbar {
+    padding: .5rem 3% !important;
+
+    .navbar-brand {
+      font-size: 1.7rem;
+    }
+  }
+}
+

@@ -1,0 +1,62 @@
+@import '../../assets/scss/index';
+
+.tasks-section {
+  .header,
+  .card-deck-container {
+    padding: .4rem 10%;
+  }
+
+  .card-deck {
+    flex-wrap: wrap;
+    justify-content: start;
+
+    .card {
+      border: 1px solid $primary-grey;
+      margin-bottom: 2%;
+      max-width: 30%;
+      min-width: 30%;
+
+      .card-header {
+        background-color: $primary-blue;
+        color: $primary-white;
+        opacity: .5;
+        text-transform: uppercase;
+      }
+
+      .card-body {
+        min-height: 125px;
+
+        .card-text {
+          text-transform: uppercase;
+        }
+      }
+    }
+  }
+}
+
+
+@media screen and (max-width: 740px) {
+  .tasks-section {
+    .header {
+      h4 {
+        font-size: 1.2rem;
+      }
+    }
+
+    .header,
+    .card-deck-container {
+      padding: .4rem 3%;
+    }
+
+    .card-deck {
+      justify-content: start;
+
+      .card {
+        max-width: 100%;
+        min-width: 100%;
+      }
+    }
+  }
+}
+
+

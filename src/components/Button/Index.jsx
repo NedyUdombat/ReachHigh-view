@@ -14,7 +14,7 @@ const Button = ({
 }) => {
   return (
     <button
-      className={className ? `btn ${className}` : 'btn rounded-0'}
+      className={className ? `custom-btn ${className}` : 'custom-btn rounded-0'}
       type={type}
       onClick={onClick}
       {...props}
