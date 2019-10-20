@@ -1,13 +1,82 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // components
 import Layout from '../../wrappers/Layout/Index';
 
+// styles
 import './Goals.scss';
-import { Link } from 'react-router-dom';
 
+// actions
+import { selectGoal, getUserGoals } from '../../store/modules/goal';
+
+let DEFAULT_STATE = {
+  goals: [
+    { id: 1, name: 'Build My Network', checked: false, icon: 'fa-users' },
+    {
+      id: 2,
+      name: 'Personal branding',
+      checked: false,
+      icon: 'fa-copyright',
+    },
+    { id: 3, name: 'Get a promotion', checked: false, icon: 'fa-chart-line' },
+    {
+      id: 4,
+      name: 'Be a better leader',
+      checked: false,
+      icon: 'fa-user-tie',
+    },
+  ],
+};
 class Goals extends Component {
+  state = {};
+
+  componentDidMount = async () => {
+    await this.props.getUserGoals();
+    const { userGoals } = this.props;
+    let goalsForState;
+    if (userGoals.length !== 0) {
+      for (let userGoal of userGoals) {
+        goalsForState = DEFAULT_STATE.goals.map(goal => {
+          if (goal.id === userGoal.goalId) {
+            goal.checked = true;
+            return goal;
+          }
+          return goal;
+        });
+      }
+      this.setState({
+        goals: goalsForState,
+      });
+    } else {
+      this.setState({ goals: DEFAULT_STATE.goals });
+    }
+  };
+
+  handleSelection = ({ target: { name } }) => {
+    let selectedGoal = DEFAULT_STATE.goals.find(goal => goal.name === name);
+    this.setState(previousState => {
+      const newState = previousState.goals.map(goal => {
+        if (goal.name === name) {
+          goal.checked = !goal.checked;
+          return goal;
+        }
+        return goal;
+      });
+      return {
+        newState,
+      };
+    });
+    this.props.selectGoal(selectedGoal.id).then(() => {
+      if (this.props.error) {
+        this.setState({ ...DEFAULT_STATE });
+      }
+    });
+  };
+
   render() {
+    const { goals } = this.state;
     return (
       <Layout>
         <section className="goal-section">
@@ -18,74 +87,28 @@ class Goals extends Component {
           <section className="checkbox-section d-flex justify-content-center">
             <ul className="list-group">
               <form>
-                <li className="list-group-item">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customCheck"
-                      name="example1"
-                    />
-                    <label
-                      className="custom-control-label w-100 pl-4"
-                      htmlFor="customCheck"
-                    >
-                      <i className="fas fa-users fa-lg mr-2" />
-                      Build My Network
-                    </label>
-                  </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customCheck"
-                      name="example1"
-                    />
-                    <label
-                      className="custom-control-label w-100 pl-4"
-                      htmlFor="customCheck"
-                    >
-                      <i className="fas fa-copyright fa-lg mr-2" />
-                      Personal branding
-                    </label>
-                  </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customCheck"
-                      name="example1"
-                    />
-                    <label
-                      className="custom-control-label w-100 pl-4"
-                      htmlFor="customCheck"
-                    >
-                      <i className="fas fa-chart-line fa-lg mr-2" />
-                      Get a promotion
-                    </label>
-                  </div>
-                </li>
-                <li className="list-group-item">
-                  <div className="custom-control custom-checkbox">
-                    <input
-                      type="checkbox"
-                      className="custom-control-input"
-                      id="customCheck4"
-                      name="example1"
-                    />
-                    <label
-                      className="custom-control-label w-100 pl-4"
-                      htmlFor="customCheck4"
-                    >
-                      <i className="fas fa-user-tie fa-lg mr-2" />
-                      Be a bettter leader
-                    </label>
-                  </div>
-                </li>
+                {goals &&
+                  goals.map(goal => (
+                    <li className="list-group-item" key={goal.id}>
+                      <div className="custom-control custom-checkbox">
+                        <input
+                          type="checkbox"
+                          className="custom-control-input"
+                          id={goal.name}
+                          name={goal.name}
+                          checked={goal.checked}
+                          onChange={this.handleSelection}
+                        />
+                        <label
+                          className="custom-control-label w-100 pl-4"
+                          htmlFor={goal.name}
+                        >
+                          <i className={`fas ${goal.icon} fa-lg mr-2`} />
+                          {goal.name}
+                        </label>
+                      </div>
+                    </li>
+                  ))}
               </form>
             </ul>
           </section>
@@ -103,4 +126,12 @@ class Goals extends Component {
   }
 }
 
-export default Goals;
+const mapStateToProps = ({ goal }) => ({
+  userGoals: goal.goals,
+  error: goal.error,
+});
+
+export default connect(
+  mapStateToProps,
+  { selectGoal, getUserGoals },
+)(Goals);
