@@ -30,7 +30,7 @@ const App = () => {
                   to="/goals"
                 >
                   <span className="font-weight-bold">Continue</span>
-                  <i className="fas fa-arrow-right fa-lg ml-2 mr-md-3" />
+                  <i className="fas fa-arrow-right fa-lg ml-2" />
                 </Link>
               ) : (
                 <Link

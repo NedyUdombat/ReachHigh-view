@@ -6,16 +6,13 @@ import { Redirect } from 'react-router';
 import Button from '../../components/Button/Index';
 
 // actions
-import { register } from '../../store/modules/auth';
+import { authenticate } from '../../store/modules/auth';
 
-class Register extends Component {
+class Login extends Component {
   state = {
     userDetails: {
-      fullName: '',
-      username: '',
       email: '',
       password: '',
-      confirmPassword: '',
     },
     redirect: false,
     loading: false,
@@ -39,7 +36,7 @@ class Register extends Component {
       disabled: true,
     });
     this.props
-      .register({
+      .authenticate({
         ...this.state.userDetails,
       })
       .then(() => {
@@ -64,37 +61,7 @@ class Register extends Component {
             <i className="fas fa-spinner fa-pulse fa-10x text-white" />
           </div>
         )}
-        <form
-          className="registration-form"
-          onSubmit={this.handleRegistration}
-          autoComplete="on"
-        >
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="fullName"
-              name="fullName"
-              aria-describedby="fullNameHelp"
-              placeholder="Full Name*"
-              disabled={disabled}
-              required
-              onChange={this.handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <input
-              type="text"
-              className="form-control"
-              id="username"
-              name="username"
-              aria-describedby="usernameHelp"
-              placeholder="Username*"
-              required
-              disabled={disabled}
-              onChange={this.handleChange}
-            />
-          </div>
+        <form className="registration-form" onSubmit={this.handleRegistration}>
           <div className="form-group">
             <input
               type="email"
@@ -122,28 +89,15 @@ class Register extends Component {
               onChange={this.handleChange}
             />
           </div>
-
-          <div className="form-group">
-            <input
-              type="password"
-              className="form-control"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm Password*"
-              required
-              disabled={disabled}
-              onChange={this.handleChange}
-            />
-          </div>
           <Button
             type="submit"
             className="custom-btn btn-blue w-100 my-1"
             value="SUBMIT"
           />
           <div className="d-flex switch-state-div justify-content-center">
-            Already have an account?
+            Don&apos;t have an account?
             <Button
-              value="Login"
+              value="Register"
               className="min-btn"
               onClick={() => toggleAction()}
               type="button"
@@ -157,5 +111,5 @@ class Register extends Component {
 
 export default connect(
   null,
-  { register },
-)(Register);
+  { authenticate },
+)(Login);
