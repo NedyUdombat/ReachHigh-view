@@ -10,18 +10,31 @@ import Button from '../../components/Button/Index';
 import './SingleTask.scss';
 
 // actions
-import { getSingleTask } from '../../store/modules/task';
+import { getSingleTask, finishTask } from '../../store/modules/task';
 
 // helpers
 import { decodeToken } from '../../api/helpers';
 
 class SingleTask extends Component {
+  state = {
+    completed: false,
+  };
   componentDidMount = () => {
     this.props.getSingleTask(this.props.match.params.id);
   };
 
+  handleTaskCompletion = () => {
+    this.props.finishTask(this.props.match.params.id).then(() =>
+      this.setState({
+        ...this.state,
+        completed: !this.state.completed,
+      }),
+    );
+  };
+
   render() {
     const { task } = this.props;
+    const { completed } = this.state;
     return (
       <Layout>
         {task && (
@@ -40,17 +53,44 @@ class SingleTask extends Component {
                 <p className="mt-2">{decodeToken().email}</p>
               </div>
               <div className="d-none d-md-block">
-                <Button type="button" className="btn-success mark-btn">
-                  <i className="fas fa-check-square mr-1" />
-                  Finished this task? Mark as Complete
-                </Button>
+                {completed ? (
+                  <Button
+                    type="button"
+                    className="btn-transparent border-0 mark-btn"
+                    onClick={this.handleTaskCompletion}
+                  >
+                    <i className="fas fa-undo-alt mr-1 text-danger" />
+                    Undo
+                  </Button>
+                ) : (
+                  <Button
+                    type="button"
+                    className="btn-success mark-btn"
+                    onClick={this.handleTaskCompletion}
+                  >
+                    <i className="fas fa-check-square mr-1" />
+                    Finished this task? Mark as Complete
+                  </Button>
+                )}
               </div>
-              <Button
-                type="button"
-                className="btn-success p-0 floating-btn d-block d-md-none"
-              >
-                <i className="fas fa-check" />
-              </Button>
+
+              {completed ? (
+                <Button
+                  type="button"
+                  className="btn-transparent text-danger p-0 floating-btn d-block d-md-none"
+                  onClick={this.handleTaskCompletion}
+                >
+                  <i className="fas fa-undo-alt" />
+                </Button>
+              ) : (
+                <Button
+                  type="button"
+                  className="btn-success p-0 floating-btn d-block d-md-none"
+                  onClick={this.handleTaskCompletion}
+                >
+                  <i className="fas fa-check" />
+                </Button>
+              )}
             </div>
             <div className="d-flex justify-content-center">
               <div className="row w-100">
@@ -104,10 +144,9 @@ class SingleTask extends Component {
 
 const mapStateToProps = ({ task }) => ({
   task: task.task,
-  error: task.error,
 });
 
 export default connect(
   mapStateToProps,
-  { getSingleTask },
+  { getSingleTask, finishTask },
 )(SingleTask);

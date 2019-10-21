@@ -11,6 +11,7 @@ const Button = ({
   children,
   props,
   style,
+  disabled,
 }) => {
   return (
     <button
@@ -18,6 +19,7 @@ const Button = ({
       type={type}
       onClick={onClick}
       {...props}
+      disabled={disabled}
       style={style}
     >
       {children ? children : value}

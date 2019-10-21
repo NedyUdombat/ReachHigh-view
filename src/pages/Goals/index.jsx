@@ -13,17 +13,17 @@ import { selectGoal, getUserGoals } from '../../store/modules/goal';
 
 let DEFAULT_STATE = {
   goals: [
-    { id: 1, name: 'Build My Network', checked: false, icon: 'fa-users' },
+    { id: 1, name: 'Be a better leader', checked: false, icon: 'fa-users' },
     {
       id: 2,
-      name: 'Personal branding',
+      name: 'Build my network ',
       checked: false,
       icon: 'fa-copyright',
     },
     { id: 3, name: 'Get a promotion', checked: false, icon: 'fa-chart-line' },
     {
       id: 4,
-      name: 'Be a better leader',
+      name: 'Personal Growth',
       checked: false,
       icon: 'fa-user-tie',
     },
