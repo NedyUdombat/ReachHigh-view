@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 
 // components
 import Layout from '../../wrappers/Layout/Index';
-import Button from '../../components/Button/Index';
 
 // styles
 import './Tasks.scss';
 
 // actions
 import { getUsersTasks } from '../../store/modules/task';
+
+// helpers
+import { decodeToken } from '../../api/helpers';
 
 class Tasks extends Component {
   componentDidMount = () => {
@@ -19,6 +21,11 @@ class Tasks extends Component {
 
   render() {
     const { tasks } = this.props;
+    const completedTasks = tasks.filter(task => task.completed === true);
+    const completionPercentage = (
+      (completedTasks.length / tasks.length) *
+      100
+    ).toFixed(1);
     return (
       <Layout>
         <section className="tasks-section">
@@ -27,9 +34,18 @@ class Tasks extends Component {
               <i className="fas fa-long-arrow-alt-left text-dark fa-2x" />
             </Link>
             <h4 className="mr-auto">
-              Mary, here&apos;s your list of suggested tasks
+              {decodeToken().email.split('@')[0]}, here&apos;s your list of
+              suggested tasks
             </h4>
           </header>
+
+          <div className="container">
+            {Number(completionPercentage) === 100 ? (
+              <p>Hurray your goals are 100% complete</p>
+            ) : (
+              <p>You are {completionPercentage}% towards your goal</p>
+            )}
+          </div>
           <div className="container-fluid card-deck-container">
             <div className="card-deck">
               {tasks.length !== 0 &&
@@ -43,10 +59,13 @@ class Tasks extends Component {
                     </div>
                     <div className="card-footer bg-white">
                       {task.completed ? (
-                        <Button className="btn-success w-100">
+                        <Link
+                          to={`/tasks/${task.taskId}`}
+                          className="custom-btn-link btn-success w-100 text-decoration-none"
+                        >
                           <i className="fas fa-check-square mr-1" />
                           Completed
-                        </Button>
+                        </Link>
                       ) : (
                         <Link
                           className="custom-btn-link btn-blue text-decoration-none"

@@ -1,11 +1,16 @@
 import { toast } from 'react-toastify';
 
-import { getUsersTasksRequest, getSingleTaskRequest } from '../../api/task';
+import {
+  getUsersTasksRequest,
+  getSingleTaskRequest,
+  finishTaskRequest,
+} from '../../api/task';
 
 const GET_ALL_USERS_TASKS_SUCCESS = 'GET_ALL_USERS_TASKS_SUCCESS';
-const GET_SINGLE_TASK_SUCCESS = 'GET_SINGLE_TASK_SUCCESS';
 const GET_ALL_USERS_TASKS_FAILURE = 'GET_ALL_USERS_TASKS_FAILURE';
+const GET_SINGLE_TASK_SUCCESS = 'GET_SINGLE_TASK_SUCCESS';
 const GET_SINGLE_TASK_FAILURE = 'GET_SINGLE_TASK_FAILURE';
+const FINISH_TASK_FAILURE = 'FINISH_TASK_FAILURE';
 
 export const getUsersTasks = () => async dispatch => {
   try {
@@ -31,6 +36,18 @@ export const getSingleTask = id => async dispatch => {
   }
 };
 
+export const finishTask = id => async dispatch => {
+  try {
+    const {
+      data: { message },
+    } = await finishTaskRequest(id);
+    toast.success(message);
+  } catch (error) {
+    toast.error(`${error.response.data.message}`);
+    dispatch({ type: FINISH_TASK_FAILURE });
+  }
+};
+
 const DEFAULT_STATE = {
   error: false,
   tasks: [],
@@ -51,6 +68,7 @@ export const taskReducer = (state = DEFAULT_STATE, { type, payload }) => {
       };
     case GET_ALL_USERS_TASKS_FAILURE:
     case GET_SINGLE_TASK_FAILURE:
+    case FINISH_TASK_FAILURE:
       return {
         ...state,
         error: true,
