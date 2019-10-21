@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // components
 import Layout from '../../wrappers/Layout/Index';
+import Button from '../../components/Button/Index';
 
 // styles
 import './Tasks.scss';
-import Button from '../../components/Button/Index';
+
+// actions
+import { getUsersTasks } from '../../store/modules/task';
 
 class Tasks extends Component {
-  state = {
-    completed: true,
+  componentDidMount = () => {
+    this.props.getUsersTasks();
   };
+
   render() {
-    const { completed } = this.state;
+    const { tasks } = this.props;
     return (
       <Layout>
         <section className="tasks-section">
@@ -27,65 +32,33 @@ class Tasks extends Component {
           </header>
           <div className="container-fluid card-deck-container">
             <div className="card-deck">
-              <div className="card">
-                <div className="card-header">Get A Promotion</div>
-                <div className="card-body">
-                  <p className="card-text">
-                    HAVE A CAREER CONVERSATION WITH YOUR MANAGER
-                  </p>
-                </div>
-                <div className="card-footer">
-                  {completed ? (
-                    <Button className="btn-success w-100">
-                      <i className="fas fa-check-square mr-1" />
-                      Completed
-                    </Button>
-                  ) : (
-                    <Link
-                      className="custom-btn-link btn-blue text-decoration-none"
-                      to="#"
-                    >
-                      <i className="fas fa-play-circle mr-1" />
-                      <span className="mt-1">Start Task</span>
-                    </Link>
-                  )}
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header">Featured</div>
-                <div className="card-body">
-                  <p className="card-text">
-                    WRITE YOUR PERSONAL BRAND STATEMENT
-                  </p>
-                </div>
-                <div className="card-footer">
-                  <Link
-                    className="custom-btn-link btn-border-blue text-decoration-none"
-                    to="/tasks/1"
-                  >
-                    <i className="fas fa-play-circle mr-1" />
-                    <span className="mt-1">Start Task</span>
-                  </Link>
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header">GET A PROMOTION</div>
-                <div className="card-body">
-                  <p className="card-text">ASK 4 PEERS FOR CANDID FEEDBACK</p>
-                </div>
-                <div className="card-footer">
-                  <small className="text-muted">Last updated 3 mins ago</small>
-                </div>
-              </div>
-              <div className="card">
-                <div className="card-header">Featured</div>
-                <div className="card-body">
-                  <p className="card-text">ASK 4 PEERS FOR CANDID FEEDBACK</p>
-                </div>
-                <div className="card-footer">
-                  <small className="text-muted">Last updated 3 mins ago</small>
-                </div>
-              </div>
+              {tasks.length !== 0 &&
+                tasks.map(task => (
+                  <div className="card" key={task.id}>
+                    <div className="card-header">
+                      {task.taskDetails.goal.title}
+                    </div>
+                    <div className="card-body">
+                      <p className="card-text">{task.taskDetails.title}</p>
+                    </div>
+                    <div className="card-footer bg-white">
+                      {task.completed ? (
+                        <Button className="btn-success w-100">
+                          <i className="fas fa-check-square mr-1" />
+                          Completed
+                        </Button>
+                      ) : (
+                        <Link
+                          className="custom-btn-link btn-blue text-decoration-none"
+                          to={`/tasks/${task.taskId}`}
+                        >
+                          <i className="fas fa-play-circle mr-1" />
+                          <span className="mt-1">Start Task</span>
+                        </Link>
+                      )}
+                    </div>
+                  </div>
+                ))}
             </div>
           </div>
         </section>
@@ -94,4 +67,12 @@ class Tasks extends Component {
   }
 }
 
-export default Tasks;
+const mapStateToProps = ({ task }) => ({
+  tasks: task.tasks,
+  error: task.error,
+});
+
+export default connect(
+  mapStateToProps,
+  { getUsersTasks },
+)(Tasks);
