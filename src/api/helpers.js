@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 
 import { KEY } from '../utils/config';
 
-export const decodeToken = token => jwt.decode(token);
+export const decodeToken = () => jwt.decode(getToken());
 
 export const setToken = token => {
   localStorage.setItem('token', token);
@@ -29,14 +29,6 @@ export const getEncodedUser = () => {
 export const destroyEncodedUser = () => {
   localStorage.removeItem('encodedUser');
   return null;
-};
-
-export const isAdmin = () => {
-  return getEncodedUser().isAdmin === true;
-};
-
-export const isIndexPage = () => {
-  return window.location.pathname === '/';
 };
 
 export const logout = () => {
